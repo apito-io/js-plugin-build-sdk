@@ -1,13 +1,13 @@
-# Apito JavaScript Plugin SDK
+# Apito JavaScript Plugin Build SDK
 
 A simplified JavaScript/Node.js SDK for building HashiCorp plugins for the Apito Engine. This SDK abstracts away all the boilerplate code and provides a clean, easy-to-use interface for plugin developers.
 
 ## Installation
 
 ```bash
-npm install @apito-io/js-apito-plugin-sdk
+npm install @apito-io/js-plugin-build-sdk
 # or
-yarn add @apito-io/js-apito-plugin-sdk
+yarn add @apito-io/js-plugin-build-sdk
 ```
 
 ## Quick Start
@@ -15,7 +15,7 @@ yarn add @apito-io/js-apito-plugin-sdk
 ### Basic Plugin Structure
 
 ```javascript
-const { init } = require("@apito/js-plugin-sdk");
+const { init } = require("@apito-io/js-plugin-build-sdk");
 const {
   StringField,
   FieldWithArgs,
@@ -23,7 +23,7 @@ const {
   GETEndpoint,
   ObjectSchema,
   StringSchema,
-} = require("@apito/js-plugin-sdk/helpers");
+} = require("@apito-io/js-plugin-build-sdk/helpers");
 
 async function main() {
   // Initialize the plugin
@@ -153,7 +153,7 @@ const {
   FloatField,
   ListField,
   NonNullField,
-} = require("@apito/js-plugin-sdk/helpers");
+} = require("@apito-io/js-plugin-build-sdk/helpers");
 
 StringField("Description"); // String
 IntField("Description"); // Int
@@ -172,7 +172,7 @@ const {
   StringArg,
   IntArg,
   BooleanArg,
-} = require("@apito/js-plugin-sdk/helpers");
+} = require("@apito-io/js-plugin-build-sdk/helpers");
 
 FieldWithArgs("String", "Get user greeting", {
   name: StringArg("User name"),
@@ -184,7 +184,7 @@ FieldWithArgs("String", "Get user greeting", {
 #### Object Fields
 
 ```javascript
-const { ObjectField, ObjectArg } = require("@apito/js-plugin-sdk/helpers");
+const { ObjectField, ObjectArg } = require("@apito-io/js-plugin-build-sdk/helpers");
 
 ObjectField("User object", {
   id: StringArg("User ID"),
@@ -196,7 +196,7 @@ ObjectField("User object", {
 #### Complex Object Types
 
 ```javascript
-const { NewObjectType } = require("@apito/js-plugin-sdk/helpers");
+const { NewObjectType } = require("@apito-io/js-plugin-build-sdk/helpers");
 
 // Define a complex object type
 const userType = NewObjectType("User", "A user in the system")
@@ -226,7 +226,7 @@ const {
   POSTEndpoint,
   ObjectSchema,
   StringSchema,
-} = require("@apito/js-plugin-sdk/helpers");
+} = require("@apito-io/js-plugin-build-sdk/helpers");
 
 const endpoint = GETEndpoint("/users", "Get all users")
   .withResponseSchema(
@@ -269,7 +269,7 @@ const {
   PUTEndpoint,
   DELETEEndpoint,
   PATCHEndpoint,
-} = require("@apito/js-plugin-sdk/helpers");
+} = require("@apito-io/js-plugin-build-sdk/helpers");
 
 GETEndpoint(path, description);
 POSTEndpoint(path, description);
@@ -287,7 +287,7 @@ const {
   StringSchema,
   IntegerSchema,
   BooleanSchema,
-} = require("@apito/js-plugin-sdk/helpers");
+} = require("@apito-io/js-plugin-build-sdk/helpers");
 
 ObjectSchema(properties); // Object schema
 ArraySchema(itemSchema); // Array schema
@@ -330,7 +330,7 @@ const {
   getBoolArg,
   getObjectArg,
   getArrayArg,
-} = require("@apito/js-plugin-sdk/helpers");
+} = require("@apito-io/js-plugin-build-sdk/helpers");
 
 async function myResolver(context, args) {
   const name = getStringArg(args, "name", "Default Name");
@@ -351,7 +351,7 @@ const {
   getQueryParam,
   getBodyParam,
   logRESTArgs,
-} = require("@apito/js-plugin-sdk/helpers");
+} = require("@apito-io/js-plugin-build-sdk/helpers");
 
 async function myRESTHandler(context, args) {
   // Debug log all arguments
@@ -400,7 +400,7 @@ const {
   FieldWithArgs,
   ObjectArg,
   ListArg,
-} = require("@apito/js-plugin-sdk/helpers");
+} = require("@apito-io/js-plugin-build-sdk/helpers");
 
 plugin.registerQuery(
   "processComplexData",
@@ -439,7 +439,7 @@ const {
   POSTEndpoint,
   ObjectSchema,
   ArraySchema,
-} = require("@apito/js-plugin-sdk/helpers");
+} = require("@apito-io/js-plugin-build-sdk/helpers");
 
 const endpoint = POSTEndpoint("/api/users", "Create new user")
   .withRequestSchema(
@@ -468,7 +468,7 @@ const endpoint = POSTEndpoint("/api/users", "Create new user")
 plugin.registerRESTAPI(endpoint, createUserWithMetadataHandler);
 
 async function createUserWithMetadataHandler(context, args) {
-  const { logRESTArgs, getBodyParam } = require("@apito/js-plugin-sdk/helpers");
+  const { logRESTArgs, getBodyParam } = require("@apito-io/js-plugin-build-sdk/helpers");
 
   logRESTArgs("createUserWithMetadata", args);
 
@@ -609,12 +609,12 @@ The SDK provides structured logging for:
 While this SDK is written in JavaScript, you can use it with TypeScript:
 
 ```typescript
-import { init } from "@apito/js-plugin-sdk";
+import { init } from "@apito-io/js-plugin-build-sdk";
 import {
   StringField,
   FieldWithArgs,
   StringArg,
-} from "@apito/js-plugin-sdk/helpers";
+} from "@apito-io/js-plugin-build-sdk/helpers";
 
 interface ResolverContext {
   plugin_id: string;

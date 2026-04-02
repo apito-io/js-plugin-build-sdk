@@ -9,7 +9,7 @@
     "debug": "node --inspect main.js"
   },
   "dependencies": {
-    "@apito/js-plugin-sdk": "file:../../"
+    "@apito-io/js-plugin-build-sdk": "file:../../"
   },
   "devDependencies": {
     "nodemon": "^2.0.0"

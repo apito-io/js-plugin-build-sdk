@@ -1,13 +1,14 @@
 {
-  "name": "@apito-io/js-apito-plugin-sdk",
-  "version": "0.2.4",
-  "description": "JavaScript SDK for building Apito HashiCorp plugins",
+  "name": "@apito-io/js-plugin-build-sdk",
+  "version": "0.3.0",
+  "description": "JavaScript SDK for building Apito HashiCorp plugins (plugin build tooling)",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
   "files": [
     "dist/",
     "plugin.proto",
-    "README.md"
+    "README.md",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "node build.js",
@@ -25,15 +26,15 @@
   "author": "Apito Inc",
   "license": "MIT",
   "dependencies": {
-    "@grpc/grpc-js": "^1.8.14",
-    "@grpc/proto-loader": "^0.7.6"
+    "@grpc/grpc-js": "^1.14.3",
+    "@grpc/proto-loader": "^0.8.0"
   },
   "devDependencies": {
-    "typescript": "^5.0.4"
+    "typescript": "~5.9.3"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/apito-io/js-apito-plugin-sdk.git"
+    "url": "https://github.com/apito-io/js-plugin-build-sdk.git"
   },
   "publishConfig": {
     "access": "public"

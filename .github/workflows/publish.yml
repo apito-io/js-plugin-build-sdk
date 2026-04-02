@@ -1,4 +1,4 @@
-name: Publish to NPM
+name: Publish @apito-io/js-plugin-build-sdk
 
 on:
   push:
@@ -11,14 +11,15 @@ on:
       - develop
 
 jobs:
-  # CI job for PRs only
   ci:
-    name: Build on Node ${{ matrix.node }} and ${{ matrix.os }}
+    name: Build on Node ${{ matrix.node }}
     runs-on: ${{ matrix.os }}
     if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
     strategy:
       matrix:
-        node: ['18.x', '20.x']
+        node: ['18.x', '20.x', '22.x']
         os: [ubuntu-latest]
 
     steps:
@@ -29,6 +30,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
@@ -39,10 +41,11 @@ jobs:
       - name: Build
         run: npm run build
 
-  # Publish job only for tags
   publish:
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -50,8 +53,9 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           registry-url: 'https://registry.npmjs.org'
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
@@ -63,17 +67,13 @@ jobs:
         run: npm run build
 
       - name: Extract version from tag
-        id: extract_version
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
 
       - name: Update package version
         run: |
-          # Get current version from package.json
           CURRENT_VERSION=$(node -p "require('./package.json').version")
           echo "Current version in package.json: $CURRENT_VERSION"
           echo "Version from tag: $VERSION"
-          
-          # Only update if versions don't match
           if [ "$CURRENT_VERSION" != "$VERSION" ]; then
             echo "Updating version in package.json to $VERSION"
             npm version $VERSION --no-git-tag-version
@@ -87,17 +87,17 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish to NPM
+      - name: Publish package to npm
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           name: Release v${{ env.VERSION }}
           draft: false
           prerelease: false
           generate_release_notes: true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
