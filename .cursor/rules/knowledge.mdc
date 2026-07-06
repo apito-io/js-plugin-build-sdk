@@ -1,5 +1,7 @@
 ---
-alwaysApply: true
+description: Knowledge entry point for js-plugin-build-sdk — read .knowledge/README.md before coding in apito/sdk/js-plugin-build-sdk
+globs: apito/sdk/js-plugin-build-sdk/**
+alwaysApply: false
 ---
 
 # Knowledge base — js-plugin-build-sdk
